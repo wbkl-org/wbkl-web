@@ -1,14 +1,16 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import { t } from '$lib/i18n';
 	import NewsCard from '$lib/components/ui/NewsCard.svelte';
 	import EventCard from '$lib/components/ui/EventCard.svelte';
 
 	let { data }: { data: PageData } = $props();
+	const locale = $derived(data.locale);
 
 	const tabs = $derived([
-		{ id: 'news', label: data.locale === 'en' ? 'News' : 'Noticias' },
-		{ id: 'events', label: data.locale === 'en' ? 'Events' : 'Eventos' },
-		{ id: 'results', label: data.locale === 'en' ? 'Results' : 'Resultados' }
+		{ id: 'news', label: t('newsPage.news', locale) },
+		{ id: 'events', label: t('newsPage.events', locale) },
+		{ id: 'results', label: t('newsPage.results', locale) }
 	]);
 
 	let activeTab = $state('news');
@@ -16,14 +18,9 @@
 
 <svelte:head>
 	<title>
-		{data.locale === 'en' ? 'News & Events' : 'Noticias y Eventos'} - World Budo Karate League
+		{t('page.news.title', locale)} - World Budo Karate League
 	</title>
-	<meta
-		name="description"
-		content={data.locale === 'en'
-			? 'Stay informed about the latest news, events, and results from the World Budo Karate League.'
-			: 'Mantente informado sobre las últimas noticias, eventos y resultados de la World Budo Karate League.'}
-	/>
+	<meta name="description" content={t('page.news.metaDescription', locale)} />
 </svelte:head>
 
 <section
@@ -39,15 +36,13 @@
 	<div class="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="max-w-2xl">
 			<h1 class="mb-4 text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-				{data.locale === 'en' ? 'News &' : 'Noticias y'}
+				{t('newsPage.heading', locale)}
 				<span class="text-gold-500">
-					{data.locale === 'en' ? ' Events' : ' Eventos'}
+					{t('newsPage.headingEvents', locale)}
 				</span>
 			</h1>
 			<p class="text-xl text-slate-300">
-				{data.locale === 'en'
-					? 'Stay informed about the latest news and upcoming events from the WBKL.'
-					: 'Mantente informado sobre las últimas novedades y próximos eventos de la WBKL.'}
+				{t('newsPage.subheading', locale)}
 			</p>
 		</div>
 	</div>
@@ -74,19 +69,19 @@
 		{#if activeTab === 'news'}
 			<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
 				{#each data.newsArticles as article (article.slug)}
-					<NewsCard {article} lang={data.locale} />
+					<NewsCard {article} lang={locale} />
 				{/each}
 			</div>
 		{:else if activeTab === 'events'}
 			<div class="space-y-6">
 				{#each data.events as event (event.slug)}
-					<EventCard {event} lang={data.locale} />
+					<EventCard {event} lang={locale} />
 				{/each}
 			</div>
 		{:else}
 			<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
 				{#each data.newsArticles.filter((a) => a.category === 'result') as article (article.slug)}
-					<NewsCard {article} lang={data.locale} />
+					<NewsCard {article} lang={locale} />
 				{/each}
 			</div>
 		{/if}

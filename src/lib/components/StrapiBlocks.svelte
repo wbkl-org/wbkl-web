@@ -1,3 +1,4 @@
+<!-- eslint-disable svelte/no-at-html-tags -->
 <script lang="ts">
 	import type { StrapiBlock, StrapiBlockChild, StrapiMedia } from '$lib/api/types';
 	import { getMediaUrl } from '$lib/api/media';
@@ -45,8 +46,6 @@
 	}
 </script>
 
-/* eslint-disable svelte/no-at-html-tags -- Rich text from CMS is sanitized by rendering escaped
-child text */
 {#if blocks && blocks.length > 0}
 	<div class="strapi-blocks">
 		{#each blocks as block, i (i)}

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Calendar } from 'lucide-svelte';
 	import { getMediaUrl } from '$lib/api/media';
+	import { t } from '$lib/i18n';
 	import type { NewsArticle } from '$lib/api/types';
 
 	interface Props {
@@ -9,31 +10,6 @@
 	}
 
 	let { article, lang = 'es' }: Props = $props();
-
-	function getCategoryLabel(cat: string): string {
-		if (lang === 'en') {
-			switch (cat) {
-				case 'news':
-					return 'News';
-				case 'event':
-					return 'Event';
-				case 'result':
-					return 'Result';
-				default:
-					return 'News';
-			}
-		}
-		switch (cat) {
-			case 'news':
-				return 'Noticia';
-			case 'event':
-				return 'Evento';
-			case 'result':
-				return 'Resultado';
-			default:
-				return 'Noticia';
-		}
-	}
 
 	function getCategoryColor(cat: string): string {
 		switch (cat) {
@@ -78,7 +54,7 @@
 						article.category
 					)}"
 				>
-					{getCategoryLabel(article.category)}
+					{t('news.category.' + (article.category || 'news'), lang)}
 				</span>
 			</div>
 		{:else}
@@ -88,7 +64,7 @@
 						article.category
 					)}"
 				>
-					{getCategoryLabel(article.category)}
+					{t('news.category.' + (article.category || 'news'), lang)}
 				</span>
 				<Calendar class="h-12 w-12 text-slate-300" />
 			</div>

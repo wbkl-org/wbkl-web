@@ -2,34 +2,24 @@
 	import type { PageData } from './$types';
 	import { Calendar, ArrowLeft } from 'lucide-svelte';
 	import { getMediaUrl } from '$lib/api/media';
+	import { t } from '$lib/i18n';
 	import StrapiBlocks from '$lib/components/StrapiBlocks.svelte';
 
 	let { data }: { data: PageData } = $props();
+	const locale = $derived(data.locale);
 
 	let article = $derived(data.article);
 
 	function getCategoryLabel(cat: string): string {
-		if (data.locale === 'en') {
-			switch (cat) {
-				case 'news':
-					return 'News';
-				case 'event':
-					return 'Event';
-				case 'result':
-					return 'Result';
-				default:
-					return 'News';
-			}
-		}
 		switch (cat) {
 			case 'news':
-				return 'Noticia';
+				return t('news.category.news', locale);
 			case 'event':
-				return 'Evento';
+				return t('news.category.event', locale);
 			case 'result':
-				return 'Resultado';
+				return t('news.category.result', locale);
 			default:
-				return 'Noticia';
+				return t('news.category.news', locale);
 		}
 	}
 
@@ -49,7 +39,7 @@
 	function formatDate(dateStr: string): string {
 		try {
 			const date = new Date(dateStr);
-			return date.toLocaleDateString(data.locale === 'en' ? 'en-US' : 'es-ES', {
+			return date.toLocaleDateString(locale === 'en' ? 'en-US' : 'es-ES', {
 				day: 'numeric',
 				month: 'long',
 				year: 'numeric'
@@ -66,7 +56,7 @@
 		<meta name="description" content={article.excerpt || article.title} />
 	{:else}
 		<title>
-			{data.locale === 'en' ? 'Article not found' : 'Artículo no encontrado'} - World Budo Karate League
+			{t('newsDetail.notFound', locale)} - World Budo Karate League
 		</title>
 	{/if}
 </svelte:head>
@@ -75,11 +65,11 @@
 	<section class="border-b border-slate-200 bg-white py-8">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 			<a
-				href="/{data.locale}/news"
+				href="/{locale}/news"
 				class="hover:text-budo-red-500 mb-6 flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors duration-200"
 			>
 				<ArrowLeft class="h-4 w-4" />
-				<span>{data.locale === 'en' ? 'Back to News' : 'Volver a Noticias'}</span>
+				<span>{t('newsDetail.back', locale)}</span>
 			</a>
 			<div class="mb-4 flex items-center gap-3">
 				<span
@@ -112,18 +102,16 @@
 	<section class="bg-dogi py-16 sm:py-20">
 		<div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
 			<h1 class="text-midnight-900 mb-4 text-3xl font-bold">
-				{data.locale === 'en' ? 'Article not found' : 'Artículo no encontrado'}
+				{t('newsDetail.notFound', locale)}
 			</h1>
 			<p class="mb-8 text-slate-600">
-				{data.locale === 'en'
-					? 'The article you are looking for does not exist or has been removed.'
-					: 'El artículo que buscas no existe o ha sido eliminado.'}
+				{t('newsDetail.notFoundDesc', locale)}
 			</p>
 			<a
-				href="/{data.locale}/news"
+				href="/{locale}/news"
 				class="text-budo-red-500 hover:text-budo-red-600 font-medium transition-colors duration-200"
 			>
-				{data.locale === 'en' ? 'Back to News' : 'Volver a Noticias'}
+				{t('newsDetail.back', locale)}
 			</a>
 		</div>
 	</section>

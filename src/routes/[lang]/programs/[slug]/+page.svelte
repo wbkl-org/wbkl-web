@@ -2,30 +2,22 @@
 	import type { PageData } from './$types';
 	import { Clock, Award, Users, ArrowLeft } from 'lucide-svelte';
 	import { getMediaUrl } from '$lib/api/media';
+	import { t } from '$lib/i18n';
 	import StrapiBlocks from '$lib/components/StrapiBlocks.svelte';
 
 	let { data }: { data: PageData } = $props();
+	const locale = $derived(data.locale);
 
 	let program = $derived(data.program);
 
 	function getCategoryLabel(category: string): string {
-		if (data.locale === 'en') {
-			switch (category) {
-				case 'kyokushin':
-					return 'Kyokushin';
-				case 'combat':
-					return 'Combat Martial Arts';
-				default:
-					return 'Program';
-			}
-		}
 		switch (category) {
 			case 'kyokushin':
-				return 'Kyokushin';
+				return t('programDetail.category.kyokushin', locale);
 			case 'combat':
-				return 'Artes Marciales';
+				return t('programDetail.category.combat', locale);
 			default:
-				return 'Programa';
+				return t('programDetail.category.default', locale);
 		}
 	}
 
@@ -53,7 +45,7 @@
 		<meta name="description" content={program.excerpt || program.title} />
 	{:else}
 		<title>
-			{data.locale === 'en' ? 'Program not found' : 'Programa no encontrado'} - World Budo Karate League
+			{t('programDetail.notFound', locale)} - World Budo Karate League
 		</title>
 	{/if}
 </svelte:head>
@@ -62,11 +54,11 @@
 	<section class="bg-white py-8">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 			<a
-				href="/{data.locale}/programs"
+				href="/{locale}/programs"
 				class="hover:text-budo-red-500 mb-6 flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors duration-200"
 			>
 				<ArrowLeft class="h-4 w-4" />
-				<span>{data.locale === 'en' ? 'Back to Programs' : 'Volver a Programas'}</span>
+				<span>{t('programDetail.back', locale)}</span>
 			</a>
 			<div class="mb-4">
 				<span
@@ -103,7 +95,7 @@
 					{#if getFeaturesList(program.features).length > 0}
 						<div class="mb-8">
 							<h2 class="text-midnight-900 mb-4 text-xl font-semibold">
-								{data.locale === 'en' ? 'What You Will Learn' : 'Lo que Aprenderás'}
+								{t('programDetail.whatYouLearn', locale)}
 							</h2>
 							<div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
 								{#each getFeaturesList(program.features) as feature, i (i)}
@@ -122,7 +114,7 @@
 				<div class="lg:col-span-1">
 					<div class="sticky top-24 rounded-xl border border-slate-200 bg-white p-6">
 						<h3 class="text-midnight-900 mb-4 text-lg font-semibold">
-							{data.locale === 'en' ? 'Program Information' : 'Información del Programa'}
+							{t('programDetail.programInfo', locale)}
 						</h3>
 
 						<div class="space-y-4">
@@ -131,7 +123,7 @@
 									<Users class="text-budo-red-500 mt-0.5 h-5 w-5" />
 									<div>
 										<p class="text-midnight-900 font-medium">
-											{data.locale === 'en' ? 'Level' : 'Nivel'}
+											{t('programDetail.level', locale)}
 										</p>
 										<p class="text-sm text-slate-600">{program.level}</p>
 									</div>
@@ -143,7 +135,7 @@
 									<Clock class="text-budo-red-500 mt-0.5 h-5 w-5" />
 									<div>
 										<p class="text-midnight-900 font-medium">
-											{data.locale === 'en' ? 'Schedule' : 'Horario'}
+											{t('programDetail.schedule', locale)}
 										</p>
 										<p class="text-sm text-slate-600">{program.schedule}</p>
 									</div>
@@ -152,15 +144,13 @@
 
 							<div class="border-t border-slate-200 pt-4">
 								<p class="mb-2 text-slate-600">
-									{data.locale === 'en'
-										? 'Interested in this program? Visit one of our affiliated dojos for more information.'
-										: '¿Interesado en este programa? Visita uno de nuestros dojos afiliados para más información.'}
+									{t('programDetail.interested', locale)}
 								</p>
 								<a
-									href="/{data.locale}/branches"
+									href="/{locale}/branches"
 									class="text-budo-red-500 hover:text-budo-red-600 font-medium transition-colors duration-200"
 								>
-									{data.locale === 'en' ? 'Find a Dojo' : 'Encontrar un Dojo'} →
+									{t('programDetail.findDojo', locale)} →
 								</a>
 							</div>
 						</div>
@@ -173,18 +163,16 @@
 	<section class="bg-dogi py-16 sm:py-20">
 		<div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
 			<h1 class="text-midnight-900 mb-4 text-3xl font-bold">
-				{data.locale === 'en' ? 'Program not found' : 'Programa no encontrado'}
+				{t('programDetail.notFound', locale)}
 			</h1>
 			<p class="mb-8 text-slate-600">
-				{data.locale === 'en'
-					? 'The program you are looking for does not exist or has been removed.'
-					: 'El programa que buscas no existe o ha sido eliminado.'}
+				{t('programDetail.notFoundDesc', locale)}
 			</p>
 			<a
-				href="/{data.locale}/programs"
+				href="/{locale}/programs"
 				class="text-budo-red-500 hover:text-budo-red-600 font-medium transition-colors duration-200"
 			>
-				{data.locale === 'en' ? 'Back to Programs' : 'Volver a Programas'}
+				{t('programDetail.back', locale)}
 			</a>
 		</div>
 	</section>

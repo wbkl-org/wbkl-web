@@ -2,9 +2,11 @@
 	import type { PageData } from './$types';
 	import { Clock, Award, Users } from 'lucide-svelte';
 	import { getMediaUrl } from '$lib/api/media';
+	import { t } from '$lib/i18n';
 	import Button from '$lib/components/ui/Button.svelte';
 
 	let { data }: { data: PageData } = $props();
+	const locale = $derived(data.locale);
 
 	let kyokushinPrograms = $derived(data.programs.filter((p) => p.category === 'kyokushin'));
 	let combatPrograms = $derived(data.programs.filter((p) => p.category === 'combat'));
@@ -17,15 +19,8 @@
 </script>
 
 <svelte:head>
-	<title>
-		{data.locale === 'en' ? 'Programs' : 'Programas'} - World Budo Karate League
-	</title>
-	<meta
-		name="description"
-		content={data.locale === 'en'
-			? 'Discover our training programs: Kyokushin for adults and kids, Kickboxing, Boxing, and Krav Maga. Classes for all levels.'
-			: 'Descubre nuestros programas de entrenamiento: Kyokushin para adultos y niños, Kickboxing, Boxeo y Krav Maga. Clases para todos los niveles.'}
-	/>
+	<title>{t('page.programs.title', locale)} - World Budo Karate League</title>
+	<meta name="description" content={t('page.programs.metaDescription', locale)} />
 </svelte:head>
 
 <section
@@ -41,13 +36,11 @@
 	<div class="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="max-w-2xl">
 			<h1 class="mb-4 text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-				{data.locale === 'en' ? 'Our' : 'Nuestros'}
-				<span class="text-gold-500"> {data.locale === 'en' ? 'Programs' : 'Programas'}</span>
+				{t('programsPage.our', locale)}
+				<span class="text-gold-500"> {t('programsPage.programs', locale)}</span>
 			</h1>
 			<p class="text-xl text-slate-300">
-				{data.locale === 'en'
-					? 'We offer a variety of martial arts programs for all ages and levels.'
-					: 'Ofrecemos una variedad de programas de artes marciales para todas las edades y niveles.'}
+				{t('programsPage.subheading', locale)}
 			</p>
 		</div>
 	</div>
@@ -57,12 +50,10 @@
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="mb-12">
 			<h2 class="text-midnight-900 mb-4 text-3xl font-bold">
-				{data.locale === 'en' ? 'Kyokushin Karate' : 'Karate Kyokushin'}
+				{t('programsPage.kyokushin', locale)}
 			</h2>
 			<p class="max-w-3xl text-slate-600">
-				{data.locale === 'en'
-					? 'The most practiced full-contact style in the world. Develop strength, technical discipline, and an indomitable spirit.'
-					: 'El estilo de contacto completo más practicado del mundo. Desarrolla fuerza, disciplina técnica y espíritu indomable.'}
+				{t('programsPage.kyokushinDesc', locale)}
 			</p>
 		</div>
 
@@ -86,7 +77,7 @@
 									<span
 										class="bg-budo-red-500 rounded-full px-3 py-1 text-xs font-medium text-white"
 									>
-										{data.locale === 'en' ? 'Featured Program' : 'Programa Destacado'}
+										{t('programsPage.featuredProgram', locale)}
 									</span>
 								{/if}
 							</div>
@@ -125,10 +116,10 @@
 						{/if}
 
 						<a
-							href="/{data.locale}/programs/{program.slug}"
+							href="/{locale}/programs/{program.slug}"
 							class="text-budo-red-500 hover:text-budo-red-600 font-medium transition-colors duration-200"
 						>
-							{data.locale === 'en' ? 'More information' : 'Más información'} →
+							{t('programsPage.moreInfo', locale)} →
 						</a>
 					</div>
 				</article>
@@ -141,12 +132,10 @@
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="mb-12">
 			<h2 class="text-midnight-900 mb-4 text-3xl font-bold">
-				{data.locale === 'en' ? 'Combat Martial Arts' : 'Artes Marciales de Combate'}
+				{t('programsPage.combat', locale)}
 			</h2>
 			<p class="max-w-3xl text-slate-600">
-				{data.locale === 'en'
-					? 'Complementary programs to improve your fitness, combat techniques, and self-defense skills.'
-					: 'Programas complementarios para mejorar tu condición física, técnicas de combate y habilidades de autodefensa.'}
+				{t('programsPage.combatDesc', locale)}
 			</p>
 		</div>
 
@@ -197,10 +186,10 @@
 						{/if}
 
 						<a
-							href="/{data.locale}/programs/{program.slug}"
+							href="/{locale}/programs/{program.slug}"
 							class="text-budo-red-500 hover:text-budo-red-600 text-sm font-medium transition-colors duration-200"
 						>
-							{data.locale === 'en' ? 'More information' : 'Más información'} →
+							{t('programsPage.moreInfo', locale)} →
 						</a>
 					</div>
 				</article>
@@ -212,19 +201,17 @@
 <section class="bg-midnight-500 py-16 sm:py-20">
 	<div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
 		<h2 class="mb-4 text-3xl font-bold text-white">
-			{data.locale === 'en' ? 'Ready to start?' : '¿Listo para comenzar?'}
+			{t('programsPage.ready', locale)}
 		</h2>
 		<p class="mx-auto mb-8 max-w-2xl text-slate-300">
-			{data.locale === 'en'
-				? 'Join our community and start your martial arts journey. Contact us for more information about schedules and pricing.'
-				: 'Únete a nuestra comunidad y comienza tu camino en las artes marciales. Contáctanos para más información sobre horarios y precios.'}
+			{t('programsPage.readyDesc', locale)}
 		</p>
 		<div class="flex flex-wrap justify-center gap-4">
-			<Button variant="primary" size="lg" href="/{data.locale}/branches">
-				{data.locale === 'en' ? 'Find a Dojo' : 'Encontrar un Dojo'}
+			<Button variant="primary" size="lg" href="/{locale}/branches">
+				{t('programsPage.findDojo', locale)}
 			</Button>
-			<Button variant="gold" size="lg" href="/{data.locale}/about">
-				{data.locale === 'en' ? 'Learn about WBKL' : 'Conocer la WBKL'}
+			<Button variant="gold" size="lg" href="/{locale}/about">
+				{t('programsPage.learnAbout', locale)}
 			</Button>
 		</div>
 	</div>

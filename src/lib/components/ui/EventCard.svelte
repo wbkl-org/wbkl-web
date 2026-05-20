@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Calendar, MapPin, ArrowRight } from 'lucide-svelte';
 	import { getMediaUrl } from '$lib/api/media';
+	import { t } from '$lib/i18n';
 	import type { Event } from '$lib/api/types';
 
 	interface Props {
@@ -9,31 +10,6 @@
 	}
 
 	let { event, lang = 'es' }: Props = $props();
-
-	function getTypeLabel(type: string): string {
-		if (lang === 'en') {
-			switch (type) {
-				case 'championship':
-					return 'Championship';
-				case 'clinic':
-					return 'Clinic';
-				case 'seminar':
-					return 'Seminar';
-				default:
-					return 'Event';
-			}
-		}
-		switch (type) {
-			case 'championship':
-				return 'Campeonato';
-			case 'clinic':
-				return 'Clínica';
-			case 'seminar':
-				return 'Seminario';
-			default:
-				return 'Evento';
-		}
-	}
 
 	function getTypeColor(type: string): string {
 		switch (type) {
@@ -87,13 +63,13 @@
 		<div class="min-w-0 flex-1">
 			<div class="mb-2 flex flex-wrap items-center gap-2">
 				<span class="rounded-full px-3 py-1 text-xs font-medium {getTypeColor(event.eventType)}">
-					{getTypeLabel(event.eventType)}
+					{t('events.type.' + event.eventType, lang)}
 				</span>
 				{#if event.featured}
 					<span
 						class="border-budo-red-500 text-budo-red-500 rounded-full border px-3 py-1 text-xs font-medium"
 					>
-						{lang === 'en' ? 'Featured' : 'Destacado'}
+						{t('events.featured', lang)}
 					</span>
 				{/if}
 			</div>

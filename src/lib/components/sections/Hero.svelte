@@ -4,6 +4,7 @@
 	import { Calendar, MapPin, ChevronLeft, ChevronRight } from 'lucide-svelte';
 	import { getMediaUrl } from '$lib/api/media';
 	import type { Event } from '$lib/api/types';
+	import { t } from '$lib/i18n';
 
 	interface Props {
 		events: Event[];
@@ -40,28 +41,8 @@
 	}
 
 	function getTypeLabel(type: string): string {
-		if (lang === 'en') {
-			switch (type) {
-				case 'championship':
-					return 'Championship';
-				case 'clinic':
-					return 'Clinic';
-				case 'seminar':
-					return 'Seminar';
-				default:
-					return 'Event';
-			}
-		}
-		switch (type) {
-			case 'championship':
-				return 'Campeonato';
-			case 'clinic':
-				return 'Clínica';
-			case 'seminar':
-				return 'Seminario';
-			default:
-				return 'Evento';
-		}
+		const key = ['championship', 'clinic', 'seminar'].includes(type) ? type : 'default';
+		return t('hero.type.' + key, lang);
 	}
 
 	function formatDate(dateStr: string): string {
@@ -184,7 +165,7 @@
 							<div class="flex flex-wrap gap-4">
 								{#if slide.registrationUrl}
 									<Button variant="primary" size="lg" onclick={() => openRegistrationModal(slide)}>
-										{lang === 'en' ? 'Register Now' : 'Registrarse Ahora'}
+										{t('hero.registerNow', lang)}
 									</Button>
 								{/if}
 								<Button
@@ -193,7 +174,7 @@
 									href="/{lang}/events/{slide.slug}"
 									class="hover:border-gold-300! hover:bg-gold-300! hover:text-midnight-700! text-white"
 								>
-									{lang === 'en' ? 'See Details' : 'Ver Detalles'}
+									{t('hero.seeDetails', lang)}
 								</Button>
 							</div>
 						</div>
@@ -209,7 +190,7 @@
 				resetAutoplay();
 			}}
 			class="absolute top-1/2 left-4 z-30 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-colors duration-200 hover:bg-white/20"
-			aria-label="Slide anterior"
+			aria-label={t('hero.prevSlide', lang)}
 		>
 			<ChevronLeft class="h-6 w-6" />
 		</button>
@@ -219,7 +200,7 @@
 				resetAutoplay();
 			}}
 			class="absolute top-1/2 right-4 z-30 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white backdrop-blur-sm transition-colors duration-200 hover:bg-white/20"
-			aria-label="Siguiente slide"
+			aria-label={t('hero.nextSlide', lang)}
 		>
 			<ChevronRight class="h-6 w-6" />
 		</button>
@@ -232,7 +213,7 @@
 					class="{index === currentSlide
 						? 'bg-budo-red-400 w-6'
 						: 'bg-white/50 hover:bg-white/75'} h-2 w-2 rounded-full transition-all duration-200"
-					aria-label="Ir al slide {index + 1}"
+					aria-label={t('hero.goToSlide', lang).replace('{n}', String(index + 1))}
 				></button>
 			{/each}
 		</div>

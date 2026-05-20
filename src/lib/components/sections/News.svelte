@@ -2,6 +2,7 @@
 	import { Calendar } from 'lucide-svelte';
 	import { getMediaUrl } from '$lib/api/media';
 	import type { NewsArticle } from '$lib/api/types';
+	import { t } from '$lib/i18n';
 
 	interface Props {
 		articles: NewsArticle[];
@@ -9,31 +10,6 @@
 	}
 
 	let { articles, lang = 'es' }: Props = $props();
-
-	function getCategoryLabel(category: string): string {
-		if (lang === 'en') {
-			switch (category) {
-				case 'news':
-					return 'News';
-				case 'event':
-					return 'Event';
-				case 'result':
-					return 'Result';
-				default:
-					return 'News';
-			}
-		}
-		switch (category) {
-			case 'news':
-				return 'Noticia';
-			case 'event':
-				return 'Evento';
-			case 'result':
-				return 'Resultado';
-			default:
-				return 'Noticia';
-		}
-	}
 
 	function getCategoryColor(category: string): string {
 		switch (category) {
@@ -67,13 +43,13 @@
 		<!-- Header -->
 		<div class="mb-12 flex items-center justify-between">
 			<h2 class="text-midnight-900 text-3xl font-bold">
-				{lang === 'en' ? 'News' : 'Noticias'}
+				{t('news.heading', lang)}
 			</h2>
 			<a
 				href="/{lang}/news"
 				class="text-budo-red-500 hover:text-budo-red-600 font-medium transition-colors duration-200"
 			>
-				{lang === 'en' ? 'See all' : 'Ver todas'} →
+				{t('news.seeAll', lang)} →
 			</a>
 		</div>
 
@@ -103,7 +79,7 @@
 								article.category
 							)}"
 						>
-							{getCategoryLabel(article.category)}
+							{t('news.category.' + (article.category || 'news'), lang)}
 						</span>
 					</div>
 

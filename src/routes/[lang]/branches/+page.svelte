@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ArrowLeft, MapPin, User, ExternalLink, Mail, Phone } from 'lucide-svelte';
 	import { getMediaUrl } from '$lib/api/media';
+	import { t } from '$lib/i18n';
 	import type { Dojo, Person } from '$lib/api/types';
 	import type { PageData } from './$types';
 
@@ -83,13 +84,8 @@
 </script>
 
 <svelte:head>
-	<title>{locale === 'en' ? 'Dojos' : 'Dojos'} - World Budo Karate League</title>
-	<meta
-		name="description"
-		content={locale === 'en'
-			? 'Find a Karate Kyokushin dojo near you. WBKL affiliated dojos worldwide.'
-			: 'Encuentra un dojo de Karate Kyokushin cerca de ti. Dojos afiliados a la WBKL en todo el mundo.'}
-	/>
+	<title>{t('page.branches.title', locale)} - World Budo Karate League</title>
+	<meta name="description" content={t('page.branches.metaDescription', locale)} />
 </svelte:head>
 
 <!-- Page Header -->
@@ -107,12 +103,11 @@
 	<div class="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="max-w-2xl">
 			<h1 class="mb-4 text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-				{locale === 'en' ? 'Find a' : 'Encuentra un'} <span class="text-gold-500">Dojo</span>
+				{t('branchesPage.heading1', locale)}
+				<span class="text-gold-500">{t('branchesPage.heading2', locale)}</span>
 			</h1>
 			<p class="text-xl text-slate-300">
-				{locale === 'en'
-					? 'Discover WBKL affiliated dojos around the world and find the one closest to you.'
-					: 'Descubre los dojos afiliados a la WBKL en todo el mundo y encuentra el más cercano a ti.'}
+				{t('branchesPage.subheading', locale)}
 			</p>
 		</div>
 	</div>
@@ -123,20 +118,14 @@
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="mx-auto max-w-3xl">
 			<h2 class="text-midnight-900 mb-6 text-3xl font-bold">
-				{locale === 'en' ? 'Our Dojos' : 'Nuestros Dojos'}
+				{t('branchesPage.ourDojos', locale)}
 			</h2>
 			<div class="space-y-4 leading-relaxed text-slate-600">
 				<p>
-					{locale === 'en' ? 'The ' : 'La '}
-					<strong class="text-midnight-900">World Budo Karate League</strong>
-					{locale === 'en'
-						? ' has a worldwide network of certified dojos that offer the highest quality Kyokushin Karate instruction. Each affiliated dojo maintains the technical and philosophical standards that define us.'
-						: ' cuenta con una red mundial de dojos certificados que ofrecen la más alta calidad de enseñanza en Karate Kyokushin. Cada dojo afiliado mantiene los estándares técnicos y filosóficos que nos definen.'}
+					{t('branchesPage.description1', locale)}
 				</p>
 				<p>
-					{locale === 'en'
-						? 'We are currently present in multiple countries, with dojos that offer training for all ages and levels. Explore our dojos by country to find the one that suits you best.'
-						: 'Actualmente estamos presentes en múltiples países, con dojos que ofrecen entrenamiento para todas las edades y niveles. Explora nuestros dojos por país para encontrar el más adecuado para ti.'}
+					{t('branchesPage.description2', locale)}
 				</p>
 			</div>
 		</div>
@@ -153,7 +142,7 @@
 				class="hover:text-budo-red-500 mb-6 flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors duration-200"
 			>
 				<ArrowLeft class="h-4 w-4" />
-				<span>{locale === 'en' ? 'Countries' : 'Países'}</span>
+				<span>{t('branchesPage.countries', locale)}</span>
 			</button>
 		{/if}
 
@@ -163,12 +152,10 @@
 			{#if !selectedCountry}
 				<div class="mb-12 text-center">
 					<h2 class="text-midnight-900 mb-4 text-3xl font-bold">
-						{locale === 'en' ? 'Select a Country' : 'Selecciona un País'}
+						{t('branchesPage.selectCountry', locale)}
 					</h2>
 					<p class="mx-auto max-w-2xl text-slate-600">
-						{locale === 'en'
-							? 'Find WBKL affiliated dojos in each country.'
-							: 'Encuentra los dojos afiliados a la WBKL en cada país.'}
+						{t('branchesPage.selectCountryDesc', locale)}
 					</p>
 				</div>
 				<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -186,12 +173,8 @@
 							<p class="text-budo-red-500 text-sm font-medium">
 								{country.dojoCount}
 								{country.dojoCount === 1
-									? locale === 'en'
-										? 'dojo'
-										: 'dojo'
-									: locale === 'en'
-										? 'dojos'
-										: 'dojos'}
+									? t('branchesPage.dojoSingular', locale)
+									: t('branchesPage.dojoPlural', locale)}
 							</p>
 						</button>
 					{/each}
@@ -200,13 +183,11 @@
 				<!-- Dojos View -->
 				<div class="mb-8">
 					<h2 class="text-midnight-900 text-3xl font-bold">
-						{locale === 'en' ? 'Dojos in' : 'Dojos en'}
+						{t('branchesPage.dojosIn', locale)}
 						{getLocalizedCountryName(selectedCountry)}
 					</h2>
 					<p class="mt-2 text-slate-600">
-						{locale === 'en'
-							? 'WBKL affiliated dojos in this country.'
-							: 'Dojos afiliados a la WBKL en este país.'}
+						{t('branchesPage.dojosInDesc', locale)}
 					</p>
 				</div>
 				<div class="max-h-100 overflow-y-auto pr-2">
@@ -230,7 +211,7 @@
 										<span
 											class="bg-budo-red-50 text-budo-red-600 shrink-0 rounded-full px-2 py-0.5 text-xs font-medium"
 										>
-											✓ {locale === 'en' ? 'Verified' : 'Verificado'}
+											✓ {t('branchesPage.verified', locale)}
 										</span>
 									{/if}
 								</div>
@@ -267,7 +248,7 @@
 												rel="noopener noreferrer"
 												class="hover:text-budo-red-500 underline"
 											>
-												{locale === 'en' ? 'Website' : 'Sitio web'}
+												{t('branchesPage.website', locale)}
 											</a>
 										</div>
 									{/if}
@@ -281,12 +262,11 @@
 				{#if membersByCountry()[selectedCountry] && membersByCountry()[selectedCountry].length > 0}
 					<div class="mt-12">
 						<h3 class="text-midnight-900 mb-6 text-2xl font-bold">
-							{locale === 'en' ? 'Affiliated Members' : 'Miembros Afiliados'}
+							{t('branchesPage.affiliated', locale)}
 						</h3>
 						<p class="mb-6 text-slate-600">
-							{locale === 'en'
-								? `WBKL members in ${getLocalizedCountryName(selectedCountry)}.`
-								: `Miembros de la WBKL en ${getLocalizedCountryName(selectedCountry)}.`}
+							{t('branchesPage.affiliatedDesc', locale)}
+							{getLocalizedCountryName(selectedCountry)}.
 						</p>
 						<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 							{#each membersByCountry()[selectedCountry] as member (member.documentId)}
@@ -310,7 +290,7 @@
 											<p class="text-budo-red-500 text-sm font-medium">{member.title}</p>
 										{/if}
 										{#if member.dan}
-											<p class="text-sm text-slate-600">{member.dan}</p>
+											<p class="text-sm text-slate-600">{member.dan} dan</p>
 										{/if}
 									</div>
 								</div>

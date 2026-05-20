@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { MapPin, Globe, Users, Building } from 'lucide-svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import { t } from '$lib/i18n';
 
 	interface Props {
 		lang?: string;
@@ -8,19 +9,11 @@
 
 	let { lang = 'es' }: Props = $props();
 
-	const stats = $derived(
-		lang === 'en'
-			? [
-					{ value: '5', label: 'Countries', icon: Globe },
-					{ value: '17', label: 'Dojos', icon: Building },
-					{ value: '500+', label: 'Members', icon: Users }
-				]
-			: [
-					{ value: '5', label: 'Países', icon: Globe },
-					{ value: '17', label: 'Dojos', icon: Building },
-					{ value: '500+', label: 'Miembros', icon: Users }
-				]
-	);
+	const stats = $derived([
+		{ value: '5', label: t('dojos.stats.countries', lang), icon: Globe },
+		{ value: '17', label: t('dojos.stats.dojos', lang), icon: Building },
+		{ value: '500+', label: t('dojos.stats.members', lang), icon: Users }
+	]);
 </script>
 
 <section class="bg-midnight-700 relative overflow-hidden py-16 sm:py-20">
@@ -29,12 +22,10 @@
 			<!-- Left Column -->
 			<div>
 				<h2 class="mb-6 text-3xl font-bold text-white">
-					{lang === 'en' ? 'Find a Dojo' : 'Encuentra un Dojo'}
+					{t('dojos.heading', lang)}
 				</h2>
 				<p class="mb-8 text-slate-300">
-					{lang === 'en'
-						? 'The WBKL has a worldwide network of certified dojos that offer the highest quality Kyokushin Karate instruction. Find the dojo closest to you and begin your path in Budo.'
-						: 'La WBKL cuenta con una red mundial de dojos certificados que ofrecen la más alta calidad de enseñanza en Karate Kyokushin. Encuentra el dojo más cercano a ti y comienza tu camino en el Budo.'}
+					{t('dojos.description', lang)}
 				</p>
 
 				<!-- Stats Grid -->
@@ -52,7 +43,7 @@
 
 				<Button variant="gold" size="lg" href="/{lang}/branches">
 					<MapPin class="mr-2 h-5 w-5" />
-					{lang === 'en' ? 'Find Dojo' : 'Buscar Dojo'}
+					{t('dojos.findDojo', lang)}
 				</Button>
 			</div>
 
@@ -63,7 +54,7 @@
 				>
 					<Globe class="mb-4 h-16 w-16 text-slate-600" />
 					<p class="text-sm text-slate-500">
-						{lang === 'en' ? 'Interactive map coming soon' : 'Mapa interactivo próximamente'}
+						{t('dojos.mapComingSoon', lang)}
 					</p>
 				</div>
 			</div>

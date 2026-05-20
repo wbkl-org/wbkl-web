@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { MapPin, Mail, Phone, Facebook, Instagram, Youtube } from 'lucide-svelte';
+	import { t } from '$lib/i18n';
 
 	interface Props {
 		lang?: string;
@@ -8,12 +9,12 @@
 	let { lang = 'es' }: Props = $props();
 
 	const quickLinks = $derived([
-		{ name: 'Inicio', href: `/${lang}` },
-		{ name: 'Sobre WBKL', href: `/${lang}/about` },
-		{ name: 'Dojos', href: `/${lang}/branches` },
-		{ name: 'Noticias', href: `/${lang}/news` },
-		{ name: 'Programas', href: `/${lang}/programs` },
-		{ name: 'Documentos', href: `/${lang}/documents` }
+		{ name: t('nav.home', lang), href: `/${lang}` },
+		{ name: t('nav.about', lang), href: `/${lang}/about` },
+		{ name: t('nav.branches', lang), href: `/${lang}/branches` },
+		{ name: t('nav.footerNews', lang), href: `/${lang}/news` },
+		{ name: t('nav.programs', lang), href: `/${lang}/programs` },
+		{ name: t('nav.documents', lang), href: `/${lang}/documents` }
 	]);
 
 	const socialLinks = [
@@ -40,8 +41,7 @@
 					<span class="text-lg font-bold tracking-tight uppercase">WBKL</span>
 				</div>
 				<p class="mb-6 text-sm text-gray-400">
-					Fortaleciendo el cuerpo, la mente y el espíritu a través del camino del Kyokushin. Unidos
-					por el espíritu budo en 5 paises.
+					{t('footer.aboutText', lang)}
 				</p>
 				<div class="flex gap-4">
 					{#each socialLinks as social (social.name)}
@@ -60,7 +60,7 @@
 
 			<!-- Column 2: Quick Links -->
 			<div>
-				<h3 class="mb-4 text-lg font-bold uppercase">Enlaces Rápidos</h3>
+				<h3 class="mb-4 text-lg font-bold uppercase">{t('footer.quickLinks', lang)}</h3>
 				<ul class="space-y-2">
 					{#each quickLinks as link (link.href)}
 						<li>
@@ -77,13 +77,13 @@
 
 			<!-- Column 3: Contact -->
 			<div>
-				<h3 class="mb-4 text-lg font-bold uppercase">Contacto</h3>
+				<h3 class="mb-4 text-lg font-bold uppercase">{t('footer.contact', lang)}</h3>
 				<ul class="space-y-3">
 					<li class="flex items-start gap-3">
 						<MapPin class="text-budo-red mt-0.5 h-5 w-5 shrink-0" />
 						<span class="text-sm text-gray-400">
-							Sede Mundial<br />
-							Tokyo, Japón
+							{t('footer.worldHQ', lang)}<br />
+							{t('footer.tokyo', lang)}
 						</span>
 					</li>
 					<li class="flex items-center gap-3">
@@ -108,10 +108,10 @@
 			class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-800 pt-8 sm:flex-row"
 		>
 			<p class="text-xs text-gray-500">
-				&copy; {currentYear} World Budo Karate League. Todos los derechos reservados.
+				&copy; {currentYear} World Budo Karate League. {t('footer.copyright', lang)}
 			</p>
 			<p class="text-xs text-gray-500">
-				<span class="text-budo-red">押忍</span> - Osu - Espíritu Indomable
+				<span class="text-budo-red">押忍</span> - {t('footer.motto', lang)}
 			</p>
 		</div>
 	</div>

@@ -4,6 +4,7 @@
 	import Tabs from '$lib/components/ui/Tabs.svelte';
 	import { Calendar, MapPin, ArrowRight } from 'lucide-svelte';
 	import type { Event } from '$lib/api/types';
+	import { t } from '$lib/i18n';
 
 	interface Props {
 		events: Event[];
@@ -12,19 +13,11 @@
 
 	let { events, lang = 'es' }: Props = $props();
 
-	const tabs = $derived(
-		lang === 'en'
-			? [
-					{ id: 'upcoming', label: 'Upcoming' },
-					{ id: 'championships', label: 'Championships' },
-					{ id: 'clinics', label: 'Clinics & Seminars' }
-				]
-			: [
-					{ id: 'upcoming', label: 'Próximos' },
-					{ id: 'championships', label: 'Campeonatos' },
-					{ id: 'clinics', label: 'Clínicas' }
-				]
-	);
+	const tabs = $derived([
+		{ id: 'upcoming', label: t('events.tabs.upcoming', lang) },
+		{ id: 'championships', label: t('events.tabs.championships', lang) },
+		{ id: 'clinics', label: t('events.tabs.clinics', lang) }
+	]);
 
 	const upcomingEvents = $derived(events);
 	const championshipEvents = $derived(events.filter((e) => e.eventType === 'championship'));
@@ -48,28 +41,13 @@
 		label: string;
 		variant: 'default' | 'secondary' | 'outline';
 	} {
-		if (lang === 'en') {
-			switch (type) {
-				case 'championship':
-					return { label: 'Championship', variant: 'default' };
-				case 'clinic':
-					return { label: 'Clinic', variant: 'secondary' };
-				case 'seminar':
-					return { label: 'Seminar', variant: 'secondary' };
-				default:
-					return { label: 'Event', variant: 'default' };
-			}
-		}
-		switch (type) {
-			case 'championship':
-				return { label: 'Campeonato', variant: 'default' };
-			case 'clinic':
-				return { label: 'Clínica', variant: 'secondary' };
-			case 'seminar':
-				return { label: 'Seminario', variant: 'secondary' };
-			default:
-				return { label: 'Evento', variant: 'default' };
-		}
+		const variants: Record<string, 'default' | 'secondary' | 'outline'> = {
+			championship: 'default',
+			clinic: 'secondary',
+			seminar: 'secondary'
+		};
+		const key = ['championship', 'clinic', 'seminar'].includes(type) ? type : 'default';
+		return { label: t('events.type.' + key, lang), variant: variants[type] || 'default' };
 	}
 
 	function formatDate(dateStr: string): string {
@@ -91,12 +69,10 @@
 		<!-- Header -->
 		<div class="mb-12 text-center">
 			<h2 class="text-midnight-900 mb-4 text-3xl font-bold">
-				{lang === 'en' ? 'Events' : 'Eventos'}
+				{t('events.heading', lang)}
 			</h2>
 			<p class="mx-auto max-w-2xl text-lg text-slate-600">
-				{lang === 'en'
-					? 'Discover upcoming championships, clinics, and seminars from WBKL around the world.'
-					: 'Descubre los próximos campeonatos, clínicas y seminarios de la WBKL alrededor del mundo.'}
+				{t('events.description', lang)}
 			</p>
 		</div>
 
@@ -125,7 +101,7 @@
 									</Badge>
 									{#if event.featured}
 										<Badge variant="outline">
-											{lang === 'en' ? 'Featured' : 'Destacado'}
+											{t('events.featured', lang)}
 										</Badge>
 									{/if}
 								</div>
@@ -165,7 +141,7 @@
 		<!-- Footer -->
 		<div class="mt-8 text-center">
 			<Button variant="outline" size="lg" href="/{lang}/news">
-				{lang === 'en' ? 'All Events' : 'Ver Todos los Eventos'}
+				{t('events.allEvents', lang)}
 			</Button>
 		</div>
 	</div>

@@ -2,6 +2,7 @@
 	import Modal from './Modal.svelte';
 	import Button from './Button.svelte';
 	import { Calendar, MapPin, User, Mail, Phone, Building, Hash } from 'lucide-svelte';
+	import { t } from '$lib/i18n';
 	import type { Event } from '$lib/api/types';
 
 	interface Props {
@@ -24,31 +25,6 @@
 
 	let isSubmitting = $state(false);
 	let submitted = $state(false);
-
-	function getTypeLabel(type: string): string {
-		if (lang === 'en') {
-			switch (type) {
-				case 'championship':
-					return 'Championship';
-				case 'clinic':
-					return 'Clinic';
-				case 'seminar':
-					return 'Seminar';
-				default:
-					return 'Event';
-			}
-		}
-		switch (type) {
-			case 'championship':
-				return 'Campeonato';
-			case 'clinic':
-				return 'Clínica';
-			case 'seminar':
-				return 'Seminario';
-			default:
-				return 'Evento';
-		}
-	}
 
 	function getTypeColor(type: string): string {
 		switch (type) {
@@ -105,7 +81,7 @@
 	}
 </script>
 
-<Modal {open} onClose={handleClose} size="lg">
+<Modal {open} onClose={handleClose} size="lg" {lang}>
 	{#if event}
 		{#if submitted}
 			<div class="py-8 text-center">
@@ -128,15 +104,13 @@
 					</svg>
 				</div>
 				<h3 class="text-midnight-900 mb-2 text-xl font-semibold">
-					{lang === 'en' ? 'Registration Received!' : '¡Inscripción Recibida!'}
+					{t('registration.success', lang)}
 				</h3>
 				<p class="mb-6 text-slate-600">
-					{lang === 'en'
-						? `We have received your registration for ${event.name}. We will contact you soon with more details.`
-						: `Hemos recibido tu solicitud de inscripción para ${event.name}. Te contactaremos pronto con más detalles.`}
+					{t('registration.successMessage', lang).replace('{event}', event.name)}
 				</p>
 				<Button variant="primary" onclick={handleClose}>
-					{lang === 'en' ? 'Close' : 'Cerrar'}
+					{t('registration.close', lang)}
 				</Button>
 			</div>
 		{:else}
@@ -147,7 +121,7 @@
 						event.eventType
 					)}"
 				>
-					{getTypeLabel(event.eventType)}
+					{t('registration.type.' + event.eventType, lang)}
 				</span>
 				<h2 class="text-midnight-900 mb-2 text-xl font-semibold">{event.name}</h2>
 				<div class="flex flex-wrap gap-4 text-sm text-slate-600">
@@ -167,13 +141,13 @@
 			<!-- Registration Form -->
 			<form onsubmit={handleSubmit}>
 				<h3 class="text-midnight-900 mb-4 font-semibold">
-					{lang === 'en' ? 'Participant Information' : 'Datos del Participante'}
+					{t('registration.participantInfo', lang)}
 				</h3>
 
 				<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
 					<div>
 						<label for="fullName" class="mb-1.5 block text-sm font-medium text-slate-700">
-							{lang === 'en' ? 'Full Name' : 'Nombre Completo'} *
+							{t('registration.fullName', lang)} *
 						</label>
 						<div class="relative">
 							<User class="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
@@ -183,14 +157,14 @@
 								bind:value={formData.fullName}
 								required
 								class="focus:border-budo-red-500 focus:ring-budo-red-500 w-full rounded-lg border border-slate-300 py-2.5 pr-3 pl-10 text-sm focus:ring-1 focus:outline-none"
-								placeholder={lang === 'en' ? 'Your full name' : 'Tu nombre completo'}
+								placeholder={t('registration.placeholder.fullName', lang)}
 							/>
 						</div>
 					</div>
 
 					<div>
 						<label for="email" class="mb-1.5 block text-sm font-medium text-slate-700">
-							{lang === 'en' ? 'Email' : 'Correo Electrónico'} *
+							{t('registration.email', lang)} *
 						</label>
 						<div class="relative">
 							<Mail class="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
@@ -200,14 +174,14 @@
 								bind:value={formData.email}
 								required
 								class="focus:border-budo-red-500 focus:ring-budo-red-500 w-full rounded-lg border border-slate-300 py-2.5 pr-3 pl-10 text-sm focus:ring-1 focus:outline-none"
-								placeholder="tu@email.com"
+								placeholder={t('registration.placeholder.email', lang)}
 							/>
 						</div>
 					</div>
 
 					<div>
 						<label for="phone" class="mb-1.5 block text-sm font-medium text-slate-700">
-							{lang === 'en' ? 'Phone' : 'Teléfono'} *
+							{t('registration.phone', lang)} *
 						</label>
 						<div class="relative">
 							<Phone class="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
@@ -217,14 +191,14 @@
 								bind:value={formData.phone}
 								required
 								class="focus:border-budo-red-500 focus:ring-budo-red-500 w-full rounded-lg border border-slate-300 py-2.5 pr-3 pl-10 text-sm focus:ring-1 focus:outline-none"
-								placeholder="+52 123 456 7890"
+								placeholder={t('registration.placeholder.phone', lang)}
 							/>
 						</div>
 					</div>
 
 					<div>
 						<label for="dojo" class="mb-1.5 block text-sm font-medium text-slate-700">
-							{lang === 'en' ? 'Dojo / Organization' : 'Dojo / Organización'} *
+							{t('registration.dojo', lang)} *
 						</label>
 						<div class="relative">
 							<Building class="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
@@ -234,14 +208,14 @@
 								bind:value={formData.dojo}
 								required
 								class="focus:border-budo-red-500 focus:ring-budo-red-500 w-full rounded-lg border border-slate-300 py-2.5 pr-3 pl-10 text-sm focus:ring-1 focus:outline-none"
-								placeholder={lang === 'en' ? 'Dojo name' : 'Nombre del dojo'}
+								placeholder={t('registration.placeholder.dojo', lang)}
 							/>
 						</div>
 					</div>
 
 					<div>
 						<label for="belt" class="mb-1.5 block text-sm font-medium text-slate-700">
-							{lang === 'en' ? 'Belt / Rank' : 'Grado / Cinturón'} *
+							{t('registration.belt', lang)} *
 						</label>
 						<div class="relative">
 							<Hash class="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
@@ -251,19 +225,18 @@
 								required
 								class="focus:border-budo-red-500 focus:ring-budo-red-500 w-full appearance-none rounded-lg border border-slate-300 py-2.5 pr-3 pl-10 text-sm focus:ring-1 focus:outline-none"
 							>
-								<option value="">{lang === 'en' ? 'Select' : 'Seleccionar'}</option>
-								<option value="white">{lang === 'en' ? 'White Belt' : 'Cinturón Blanco'}</option>
-								<option value="orange">{lang === 'en' ? 'Orange Belt' : 'Cinturón Naranja'}</option>
-								<option value="blue">{lang === 'en' ? 'Blue Belt' : 'Cinturón Azul'}</option>
-								<option value="yellow">{lang === 'en' ? 'Yellow Belt' : 'Cinturón Amarillo'}</option
-								>
-								<option value="green">{lang === 'en' ? 'Green Belt' : 'Cinturón Verde'}</option>
-								<option value="brown">{lang === 'en' ? 'Brown Belt' : 'Cinturón Marrón'}</option>
-								<option value="shodan">Shodan (1er Dan)</option>
-								<option value="nidan">Nidan (2do Dan)</option>
-								<option value="sandan">Sandan (3er Dan)</option>
-								<option value="yondan">Yondan (4to Dan)</option>
-								<option value="godan">Godan (5to Dan)</option>
+								<option value="">{t('registration.select', lang)}</option>
+								<option value="white">{t('registration.belt.white', lang)}</option>
+								<option value="orange">{t('registration.belt.orange', lang)}</option>
+								<option value="blue">{t('registration.belt.blue', lang)}</option>
+								<option value="yellow">{t('registration.belt.yellow', lang)}</option>
+								<option value="green">{t('registration.belt.green', lang)}</option>
+								<option value="brown">{t('registration.belt.brown', lang)}</option>
+								<option value="shodan">{t('registration.belt.shodan', lang)}</option>
+								<option value="nidan">{t('registration.belt.nidan', lang)}</option>
+								<option value="sandan">{t('registration.belt.sandan', lang)}</option>
+								<option value="yondan">{t('registration.belt.yondan', lang)}</option>
+								<option value="godan">{t('registration.belt.godan', lang)}</option>
 							</select>
 						</div>
 					</div>
@@ -271,7 +244,7 @@
 					{#if event.eventType === 'championship' && getCategories(event).length > 0}
 						<div>
 							<label for="category" class="mb-1.5 block text-sm font-medium text-slate-700">
-								{lang === 'en' ? 'Competition Category' : 'Categoría de Competencia'} *
+								{t('registration.category', lang)} *
 							</label>
 							<select
 								id="category"
@@ -279,7 +252,7 @@
 								required
 								class="focus:border-budo-red-500 focus:ring-budo-red-500 w-full appearance-none rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:ring-1 focus:outline-none"
 							>
-								<option value="">{lang === 'en' ? 'Select' : 'Seleccionar'}</option>
+								<option value="">{t('registration.select', lang)}</option>
 								{#each getCategories(event) as category, i (i)}
 									<option value={category}>{category}</option>
 								{/each}
@@ -290,16 +263,10 @@
 
 				<div class="mt-6 flex gap-3">
 					<Button variant="outline" onclick={handleClose} class="flex-1">
-						{lang === 'en' ? 'Cancel' : 'Cancelar'}
+						{t('registration.cancel', lang)}
 					</Button>
 					<Button variant="primary" class="flex-1" disabled={isSubmitting}>
-						{isSubmitting
-							? lang === 'en'
-								? 'Submitting...'
-								: 'Enviando...'
-							: lang === 'en'
-								? 'Register'
-								: 'Inscribirse'}
+						{isSubmitting ? t('registration.submitting', lang) : t('registration.register', lang)}
 					</Button>
 				</div>
 			</form>

@@ -2,9 +2,11 @@
 	import type { PageData } from './$types';
 	import { FileText, Download } from 'lucide-svelte';
 	import { getMediaUrl } from '$lib/api/media';
+	import { t } from '$lib/i18n';
 	import Button from '$lib/components/ui/Button.svelte';
 
 	let { data }: { data: PageData } = $props();
+	const locale = $derived(data.locale);
 
 	let rulesDocs = $derived(data.documents.filter((d) => d.category === 'rules'));
 	let techniquesDocs = $derived(data.documents.filter((d) => d.category === 'techniques'));
@@ -27,58 +29,30 @@
 	}
 
 	function getSectionTitle(category: string): string {
-		if (data.locale === 'en') {
-			switch (category) {
-				case 'rules':
-					return 'Rules & Regulations';
-				case 'techniques':
-					return 'Technical Guides';
-				case 'certifications':
-					return 'Certifications';
-				case 'administrative':
-					return 'Administrative Forms';
-				default:
-					return category;
-			}
-		}
 		switch (category) {
 			case 'rules':
-				return 'Reglamentos';
+				return t('documents.sections.rules', locale);
 			case 'techniques':
-				return 'Técnicas';
+				return t('documents.sections.techniques', locale);
 			case 'certifications':
-				return 'Certificaciones';
+				return t('documents.sections.certifications', locale);
 			case 'administrative':
-				return 'Administrativos';
+				return t('documents.sections.administrative', locale);
 			default:
 				return category;
 		}
 	}
 
 	function getSectionDescription(category: string): string {
-		if (data.locale === 'en') {
-			switch (category) {
-				case 'rules':
-					return 'Official regulation and standards documents of the organization.';
-				case 'techniques':
-					return 'Technical guides and programs for Kyokushin training.';
-				case 'certifications':
-					return 'Manuals and requirements for official WBKL certifications.';
-				case 'administrative':
-					return 'Administrative forms for affiliations and procedures.';
-				default:
-					return '';
-			}
-		}
 		switch (category) {
 			case 'rules':
-				return 'Documentos oficiales de regulación y normas de la organización.';
+				return t('documents.sections.rulesDesc', locale);
 			case 'techniques':
-				return 'Guías y programas técnicos para el entrenamiento de Kyokushin.';
+				return t('documents.sections.techniquesDesc', locale);
 			case 'certifications':
-				return 'Manuales y requisitos para certificaciones oficiales de la WBKL.';
+				return t('documents.sections.certificationsDesc', locale);
 			case 'administrative':
-				return 'Formularios y documentos administrativos para afiliaciones y trámites.';
+				return t('documents.sections.administrativeDesc', locale);
 			default:
 				return '';
 		}
@@ -103,14 +77,9 @@
 
 <svelte:head>
 	<title>
-		{data.locale === 'en' ? 'Official Documents' : 'Documentos Oficiales'} - World Budo Karate League
+		{t('page.documents.title', locale)} - World Budo Karate League
 	</title>
-	<meta
-		name="description"
-		content={data.locale === 'en'
-			? 'Download official WBKL documents: regulations, technical guides, forms, and certifications.'
-			: 'Descarga documentos oficiales de la WBKL: reglamentos, guías técnicas, formularios y certificaciones.'}
-	/>
+	<meta name="description" content={t('page.documents.metaDescription', locale)} />
 </svelte:head>
 
 <section
@@ -126,15 +95,13 @@
 	<div class="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="max-w-2xl">
 			<h1 class="mb-4 text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-				{data.locale === 'en' ? 'Documents' : 'Documentos'}
+				{t('documentsPage.heading', locale)}
 				<span class="text-gold-500">
-					{data.locale === 'en' ? ' Official' : ' Oficiales'}
+					{t('documentsPage.headingOfficial', locale)}
 				</span>
 			</h1>
 			<p class="text-xl text-slate-300">
-				{data.locale === 'en'
-					? 'Access regulations, technical guides, forms, and certification documents from the WBKL.'
-					: 'Accede a reglamentos, guías técnicas, formularios y documentos de certificación de la WBKL.'}
+				{t('documentsPage.subheading', locale)}
 			</p>
 		</div>
 	</div>
@@ -182,7 +149,7 @@
 									<a href={fileUrl} target="_blank" rel="noopener noreferrer">
 										<Button variant="outline" size="sm">
 											<Download class="mr-1.5 h-4 w-4" />
-											{data.locale === 'en' ? 'Download' : 'Descargar'}
+											{t('documentsPage.download', locale)}
 										</Button>
 									</a>
 								{/if}
@@ -235,7 +202,7 @@
 									<a href={fileUrl} target="_blank" rel="noopener noreferrer">
 										<Button variant="outline" size="sm">
 											<Download class="mr-1.5 h-4 w-4" />
-											{data.locale === 'en' ? 'Download' : 'Descargar'}
+											{t('documentsPage.download', locale)}
 										</Button>
 									</a>
 								{/if}
@@ -290,7 +257,7 @@
 									<a href={fileUrl} target="_blank" rel="noopener noreferrer">
 										<Button variant="outline" size="sm">
 											<Download class="mr-1.5 h-4 w-4" />
-											{data.locale === 'en' ? 'Download' : 'Descargar'}
+											{t('documentsPage.download', locale)}
 										</Button>
 									</a>
 								{/if}
@@ -345,7 +312,7 @@
 									<a href={fileUrl} target="_blank" rel="noopener noreferrer">
 										<Button variant="outline" size="sm">
 											<Download class="mr-1.5 h-4 w-4" />
-											{data.locale === 'en' ? 'Download' : 'Descargar'}
+											{t('documentsPage.download', locale)}
 										</Button>
 									</a>
 								{/if}

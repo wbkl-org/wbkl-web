@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { X } from 'lucide-svelte';
+	import { t } from '$lib/i18n';
 
 	interface Props {
 		open: boolean;
@@ -8,9 +9,10 @@
 		title?: string;
 		children: Snippet;
 		size?: 'sm' | 'md' | 'lg' | 'xl';
+		lang?: string;
 	}
 
-	let { open, onClose, title, children, size = 'md' }: Props = $props();
+	let { open, onClose, title, children, size = 'md', lang = 'es' }: Props = $props();
 
 	const sizeClasses: Record<string, string> = {
 		sm: 'max-w-sm',
@@ -56,7 +58,7 @@
 						<button
 							onclick={onClose}
 							class="rounded-full p-2 transition-colors duration-200 hover:bg-slate-100"
-							aria-label="Cerrar"
+							aria-label={t('modal.close', lang)}
 						>
 							<X class="h-5 w-5 text-slate-500" />
 						</button>
@@ -66,7 +68,7 @@
 				<button
 					onclick={onClose}
 					class="absolute top-4 right-4 rounded-full p-2 transition-colors duration-200 hover:bg-slate-100"
-					aria-label="Cerrar"
+					aria-label={t('modal.close', lang)}
 				>
 					<X class="h-5 w-5 text-slate-500" />
 				</button>

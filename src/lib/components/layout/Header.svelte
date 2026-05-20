@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Menu, X } from 'lucide-svelte';
+	import { t } from '$lib/i18n';
 
 	interface Props {
 		lang?: string;
@@ -8,12 +9,12 @@
 	let { lang = 'es' }: Props = $props();
 
 	const navLinks = $derived([
-		{ name: 'Inicio', href: `/${lang}` },
-		{ name: 'Sobre WBKL', href: `/${lang}/about` },
-		{ name: 'Dojos', href: `/${lang}/branches` },
-		{ name: 'Noticias y Eventos', href: `/${lang}/news` },
-		{ name: 'Programas', href: `/${lang}/programs` },
-		{ name: 'Documentos', href: `/${lang}/documents` }
+		{ name: t('nav.home', lang), href: `/${lang}` },
+		{ name: t('nav.about', lang), href: `/${lang}/about` },
+		{ name: t('nav.branches', lang), href: `/${lang}/branches` },
+		{ name: t('nav.news', lang), href: `/${lang}/news` },
+		{ name: t('nav.programs', lang), href: `/${lang}/programs` },
+		{ name: t('nav.documents', lang), href: `/${lang}/documents` }
 	]);
 
 	let isMenuOpen = $state(false);
@@ -56,7 +57,7 @@
 				<button
 					onclick={toggleMenu}
 					class="text-midnight hover:text-budo-red focus:ring-budo-red rounded-lg p-2 transition-colors duration-200 focus:ring-2 focus:outline-none md:hidden"
-					aria-label={isMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+					aria-label={isMenuOpen ? t('modal.close', lang) : 'Menu'}
 					aria-expanded={isMenuOpen}
 				>
 					{#if isMenuOpen}
