@@ -6,12 +6,14 @@ on:
 jobs:
   close-pr:
     runs-on: ubuntu-latest
-    # This line ensures it only runs if the PR author is NOT the repo owner
-    if: github.event.pull_request.user.login != github.repository_owner
+    # Closes the PR if the author is NOT an Owner or Member of the repository/org
+    if: |
+      github.event.pull_request.author_association != 'OWNER' && 
+      github.event.pull_request.author_association != 'MEMBER'
     permissions:
       pull-requests: write 
     steps:
       - name: Close PR
         uses: superbrothers/close-pull-request@v3
         with:
-          comment: "Thank you for your interest! However, this is a read-only personal project and I do not accept Pull Requests. This PR has been closed automatically."
+          comment: "Thank you for your interest! However, this project does not accept external Pull Requests. This PR has been closed automatically."
