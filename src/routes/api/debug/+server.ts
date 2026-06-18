@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 
 export async function GET() {
-	const strapiUrl = env.STRAPI_URL || '';
+	const strapiUrl = (env.STRAPI_URL || '').replace(/\/+$/, '');
 	const strapiToken = env.STRAPI_API_TOKEN || '';
 
 	let strapiTest: { status: number; body: unknown } | { error: string } = { error: 'not attempted' };

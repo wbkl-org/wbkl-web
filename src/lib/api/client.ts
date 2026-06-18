@@ -23,7 +23,7 @@ export async function fetchFromStrapi<T>(
 		pageSize?: number;
 	} = {}
 ): Promise<T | T[]> {
-	const strapiUrl = env.STRAPI_URL || '';
+	const strapiUrl = (env.STRAPI_URL || '').replace(/\/+$/, '');
 	const strapiToken = env.STRAPI_API_TOKEN || '';
 
 	if (!strapiUrl) {
