@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MapPin, Mail, Phone, Facebook, Instagram, Youtube } from 'lucide-svelte';
+	import { MapPin, Mail, Phone, Facebook, Instagram } from 'lucide-svelte';
 	import { t } from '$lib/i18n';
 
 	interface Props {
@@ -114,9 +114,22 @@
 		<div
 			class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-800 pt-8 sm:flex-row"
 		>
-			<p class="text-xs text-gray-500">
-				&copy; {currentYear} World Budo Karate League. {t('footer.copyright', lang)}
-			</p>
+			<div class="flex flex-col items-center gap-1 sm:items-start">
+				<p class="text-xs text-gray-500">
+					&copy; {currentYear} World Budo Karate League. {t('footer.copyright', lang)}
+				</p>
+				<p class="text-xs text-gray-500">
+					{t('footer.credit', lang)}
+					<a
+						href="https://www.linkedin.com/in/fernandosalamancadev/"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="transition-colors duration-200 hover:text-white"
+					>
+						Fernando Salamanca M.
+					</a>
+				</p>
+			</div>
 			<p class="text-xs text-gray-500">
 				<span class="text-budo-red">押忍</span> - {t('footer.motto', lang)}
 			</p>
