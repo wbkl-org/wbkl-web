@@ -99,7 +99,7 @@
 							href="mailto:wbklkyokushin@gmail.com"
 							class="text-sm text-gray-400 transition-colors duration-200 hover:text-white"
 						>
-							wbklkyokushin"gmail.com
+							wbklkyokushin@gmail.com
 						</a>
 					</li>
 					<li class="flex items-center gap-3">
