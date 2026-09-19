@@ -18,9 +18,16 @@
 	]);
 
 	const socialLinks = [
-		{ name: 'Facebook', icon: Facebook, href: 'https://facebook.com/wbkl' },
-		{ name: 'Instagram', icon: Instagram, href: 'https://instagram.com/wbkl' },
-		{ name: 'YouTube', icon: Youtube, href: 'https://youtube.com/wbkl' }
+		{
+			name: 'Facebook',
+			icon: Facebook,
+			href: 'https://www.facebook.com/profile.php?id=61558396153460&locale=es_ES%2F'
+		},
+		{
+			name: 'Instagram',
+			icon: Instagram,
+			href: 'https://www.instagram.com/kyokushin_wbkl?stkn=M25ub3p2a3MxMXYy'
+		}
 	];
 
 	const currentYear = new Date().getFullYear();
@@ -83,21 +90,21 @@
 						<MapPin class="text-budo-red mt-0.5 h-5 w-5 shrink-0" />
 						<span class="text-sm text-gray-400">
 							{t('footer.worldHQ', lang)}<br />
-							{t('footer.tokyo', lang)}
+							{t('footer.location', lang)}
 						</span>
 					</li>
 					<li class="flex items-center gap-3">
 						<Mail class="text-budo-red h-5 w-5 shrink-0" />
 						<a
-							href="mailto:info@wbkl.org"
+							href="mailto:wbklkyokushin@gmail.com"
 							class="text-sm text-gray-400 transition-colors duration-200 hover:text-white"
 						>
-							info@wbkl.org
+							wbklkyokushin"gmail.com
 						</a>
 					</li>
 					<li class="flex items-center gap-3">
 						<Phone class="text-budo-red h-5 w-5 shrink-0" />
-						<span class="text-sm text-gray-400">+81 3-1234-5678</span>
+						<span class="text-sm text-gray-400">+34 633 389 876</span>
 					</li>
 				</ul>
 			</div>
